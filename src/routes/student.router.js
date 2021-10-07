@@ -1,9 +1,19 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
+router.get("/", (req, res) => {
+  res.render("/student/home");
+});
 
-router.get('/', (req,res) => {
-res.render('student/home')
-})
+router.get("/program", (req, res) => {
+  res.render("student/program");
+});
 
+router.get("/profile", (req, res) => {
+  res.render("student/profileStudent");
+});
 
-module.exports = router
+router.get("/home", (req, res) => {
+  res.render("student/home");
+});
+
+module.exports = router;

@@ -1,0 +1,93 @@
+
+{{!-- {{{hbs partials}}} --}}
+
+{{>upperNavbar}}
+
+ <script defer src="/js/programStudent.js"></script>
+
+<div>
+
+<div {{!-- buttons on flag --}}>
+<button><a href="#bottom"> GCI badge </a>
+</button>
+
+<button><a href="#bottom"> Culture videos </a>
+</button>
+</div {{!-- buttons on flag --}}>
+
+</div>
+
+<div {{! phases and weeks}}>
+<div>phase1 phase2 phase3
+
+</div>
+
+<div name="weekChanger" class="d-flex">
+  <nav aria-label="...">
+    <ul class="pagination">
+      <li  class="page-item">
+        <a data-prev-week id="prev-week" class="page-link" > ◀ </a>
+      </li>
+      {{! <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">2</a>
+      </li> }}
+      <li class="page-item">
+        <a data-next-week id="next-week" class="page-link" > ▶ </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div plain text plus videos about company> 
+<div id="week"><h5>
+  Weekly goals</h5>
+<p> test text area </p>
+</div>
+<div><h5>
+  Addititional notes</h5>
+<p> test text area 2 </p>
+</div>
+<div><h5>
+  Scheduled events</h5>
+<p> test text area 3 </p>
+</div>
+<div>
+  <img src="https://sib.fm/storage/article/March2021/IDsV2DD5Qhwj5kWTpfYG.jpeg" width="50" height="50">
+</div>
+<div>
+  <img src="https://i.ytimg.com/vi/AD7eMN2phjc/maxresdefault.jpg" width="50" height="50">
+</div>
+</div>
+</div  {{! phases and weeks}}>
+
+
+<div {{! fixed part on bottom}}>
+<div>
+<h5>Global business intelligence badge</h5>
+<div> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Windows_Settings_app_icon.png/1024px-Windows_Settings_app_icon.png" width="50" height="50">    </div>
+<div>
+<h5>  My culture videos </h5>
+
+</div>
+</div>
+
+
+
+
+fixed same part
+GLOBAL GCI
+
+CULTURE VIDEOS
+
+
+</div {{! fixed part on bottom}} >
+
+
+
+
+
+
+
+{{>lowerNavbar}}
+
+</div>
+

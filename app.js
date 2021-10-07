@@ -49,6 +49,7 @@ app.use((req, res, next) => {
 app.use('/auth', routes.auth);
 app.use('/contributor', routes.contributor);
 app.use('/student', routes.student);
+app.use('/videos', routes.videos);
 
 // app.use('/entries', routes.entries);
 
