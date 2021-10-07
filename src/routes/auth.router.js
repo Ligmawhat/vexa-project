@@ -47,22 +47,39 @@ router.post("/login", authUser, async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  // const { name, email, password } = req.body;
-  // if ((name && email && password && password.length >= 6)) {
-  //   try {
-  //     const hashPass = await bcrypt.hash(password, 10);
-  //     const newUser = await User.create({ name, email, password: hashPass });
-  //     req.session.user = {
-  //       id: newUser.id,
-  //       name: newUser.name,
-  //     };
-  //     return res.redirect('/auth');
-  //   } catch (err) {
-  //     return res.redirect('/auth/register');
-  //   }
-  // } else {
-  //   return res.redirect('/auth/register');
-  // }
+  console.log(req.body);
+  const { fullName, email, password, country, university, userType } = req.body;
+  if ((fullName && email && password && userType && password.length >= 6)) {
+    try {
+  //  if((userType !== "student" && userType !== "contributor") || (university !== "MSU" && university !== "MIT") || (country !== "Russia" && country !== "USA")) {
+  //    return res.redirect('/auth/register')
+  //  }
+  const type = await UserType.findOne({ where: { name: userType } })
+  console.log(type);
+  if (!type) return res.redirect('/auth/register')
+  const universityType = await University.findOne({ where: { name: university } })
+  const countryType = await Country.findOne({ where: { name: country } })
+  const hashPass = await bcrypt.hash(password, 10);
+  const newUser = await User.create({
+    fullName,
+    email,
+    password: hashPass,
+    userTypeId: type.id,
+    universityId: universityType ? universityType.id : null,
+    countryId: countryType ? countryType.id : null
+  });
+  req.session.user = {
+        id: newUser.id,
+        name: newUser.fullName,
+        userType
+      };
+      return res.redirect('/auth');
+    } catch (err) {
+      return res.redirect('/auth/register');
+    }
+  } else {
+    return res.redirect('/auth/register');
+  }
 });
 
 router.post("/logout", (req, res) => {
