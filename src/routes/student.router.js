@@ -9,5 +9,9 @@ router.get('/program', (req,res) => {
 res.render('student/program')
 })
 
+router.get('/profile', (req,res) => {
+res.render('student/profile')
+})
+
 
 module.exports = router
