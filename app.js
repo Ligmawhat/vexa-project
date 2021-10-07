@@ -5,6 +5,9 @@ const hbs = require('hbs');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+const checkUser = require('./middleware/checkUser');
+
+const { UserType, Country, University } = require('./src/db/models');
 
 const redisClient = redis.createClient();
 
@@ -27,7 +30,10 @@ const sessionConfig = {
   httpOnly: true,
   cookie: { expires: 24 * 60 * 60e3 },
 };
+
+
 app.use(session(sessionConfig));
+app.use(checkUser);
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,9 +45,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/', routes.main);
+//app.use('/', routes.main);
+app.use('/auth', routes.auth);
 // app.use('/entries', routes.entries);
-// app.use('/auth', routes.auth);
 
 app.listen(PORT, () => {
   console.log(`server started PORT: ${PORT}`);
