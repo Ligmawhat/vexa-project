@@ -7,6 +7,8 @@ const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const checkUser = require('./middleware/checkUser');
 
+const { UserType, Country, University } = require('./src/db/models');
+
 const redisClient = redis.createClient();
 
 const routes = require(path.join(process.env.PWD, 'src', 'routes'));
@@ -43,7 +45,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', routes.main);
+//app.use('/', routes.main);
 app.use('/auth', routes.auth);
 // app.use('/entries', routes.entries);
 
