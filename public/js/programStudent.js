@@ -1,4 +1,5 @@
-const emptyArr = ["1", "2", "3"];
+const programArr = [{"title" : "Diving", 
+},{},{}];
 
 const $week = document.querySelector("#week");
 

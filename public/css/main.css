@@ -5,5 +5,33 @@ body {
   align-items: center;
   /* justify-content: center; */
   width: 340px;
-  height: 650px;
+  height: 900px;
+}
+.footer {
+  padding: 22px 0;
+  background-color: #f1f1f1;
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+}
+.container {
+  width: 340px;
+  margin: 0 auto;
+}
+.footer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-link {
+  display: block;
+}
+fo .container-fluid {
+  position: relative;
+}
+.header-button {
+  position: absolute;
+  left: 135px;
+  top: 20px;
 }
