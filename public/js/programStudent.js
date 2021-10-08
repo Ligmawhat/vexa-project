@@ -1,6 +1,3 @@
-// const programArr = [{"title" : "Diving", 'startDate' : new Date('October 1, 2021 03:24:00'), 'country' : "Greece", 'weeks' : {
-//   'firstWeek'
-// }},{},{}];
 
 const phases = [
   {
@@ -48,7 +45,24 @@ const phases = [
           {
             title: "Week 3 videos events",
             subtitle: "Week 3 subtitle",
-            url: "./images/thumbs/scape.jpg",
+            url: "/images/thumbs/diving.jpg",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    number: 4,
+    weeks: [
+      {
+        number: 4,
+        goals: "Week 4 Goal",
+        notes: "Week 4 Notes",
+        videos: [
+          {
+            title: "Week 4 videos events",
+            subtitle: "Week 4 subtitle",
+            url: "/images/thumbs/horseride.jpg",
           },
         ],
       },
@@ -68,22 +82,18 @@ function findWeek(phases, weekNum) {
   return null;
 }
 
-const videoFirstWeek = phases[0].weeks[0].videos[0].url;
-
 const $video = document.querySelector("[data-video]");
 
 const $notes = document.querySelector("[data-notes]");
 
 const $goals = document.querySelector("[data-goals]");
 
-const $week = document.querySelector("#week");
-
 const $nextWeek = document.querySelector("[data-next-week]");
 
 const $prevWeek = document.querySelector("[data-prev-week]");
 
 document.addEventListener("DOMContentLoaded", async (event) => {
-  phases[0].weeks[0].videos[0].url;
+  drawWeek(phases, weekNum);
   // //  const allPosts = await fetch('/')  //Получаю массив программы со всеми элементами и неделями
 });
 
@@ -102,15 +112,14 @@ const weeksCount = lastPhase.weeks[lastPhase.weeks.length - 1].number;
 $nextWeek.addEventListener("click", async (event) => {
   if (weekNum < weeksCount) {
     weekNum += 1;
-    console.log($week);
     drawWeek(phases, weekNum);
   }
 });
 
 $prevWeek.addEventListener("click", (event) => {
-  console.log($week);
   if (weekNum > 1) {
     weekNum -= 1;
     drawWeek(phases, weekNum);
   }
 });
+
