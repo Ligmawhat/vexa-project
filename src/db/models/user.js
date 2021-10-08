@@ -9,7 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Country, University, UserType }) {
+    static associate({
+      UserType, University, Country,
+      Video, AccessVideo,
+      Course
+    }) {
+      // define association here
       this.belongsTo(UserType, {
         foreignKey: 'userTypeId'
       });
@@ -19,17 +24,21 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(Country, {
         foreignKey: 'countryId'
       });
+
+      this.hasMany(Video, {
+        foreignKey: 'authorId'
+      });
+      this.hasMany(AccessVideo);
+
+      this.belongsToMany(Course, {
+        through: 'UsersCourses'
+      });
+      this.belongsToMany(Video, {
+        through: AccessVideo
+      });
     }
   };
   User.init({
-    fullName: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
     email: {
       allowNull: false,
       unique: true,
@@ -38,14 +47,31 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    fullName: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    tokens: {
+      type: DataTypes.INTEGER
+    },
+    userpicUrl: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     userTypeId: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
     universityId: {
+      allowNull: false,
       type: DataTypes.INTEGER
     },
     countryId: {
+      allowNull: false,
       type: DataTypes.INTEGER
     }
   }, {
