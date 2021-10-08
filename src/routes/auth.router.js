@@ -65,6 +65,7 @@ router.post("/register", async (req, res) => {
     email,
     password: hashPass,
     userTypeId: type.id,
+    userpicUrl: '/images/userpics/userpic.jpg',
     universityId: universityType ? universityType.id : null,
     countryId: countryType ? countryType.id : null
   });
@@ -82,7 +83,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.session.destroy();
   res.clearCookie("sId").redirect("/auth/login");
 });
