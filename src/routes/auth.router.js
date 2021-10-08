@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", authUser, async (req, res) => {
+  console.log('post', req.session.user);
   const { email, password } = req.body;
   if (email && password) {
     try {
@@ -27,7 +28,7 @@ router.post("/login", authUser, async (req, res) => {
         currentUser &&
         (await bcrypt.compare(password, currentUser.password))
       ) {
-        const { userType } = await UserType.findByPk(currentUser.userTypeId);
+        const { name: userType } = await UserType.findByPk(currentUser.userTypeId);
         req.session.user = {
           id: currentUser.id,
           name: currentUser.name,
@@ -85,7 +86,7 @@ router.post("/register", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.session.destroy();
-  res.clearCookie("sId").redirect("/auth/login");
+  res.clearCookie("sid").redirect("/auth/login");
 });
 
 module.exports = router;

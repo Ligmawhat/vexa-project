@@ -11,6 +11,7 @@ const checkUserTypeStu = require('./middleware/checkUserTypeStu');
 
 
 const { UserType, Country, University } = require('./src/db/models');
+const authUser = require('./middleware/authUser');
 
 const redisClient = redis.createClient();
 
@@ -43,13 +44,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.locals.user = req.session.user;
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.user = req.session.user;
+//   next();
+// });
 
 //app.use('/', routes.main);
-app.use('/auth', routes.auth);
+app.use('/auth' , authUser , routes.auth);
 app.use('/contributor', checkUserTypeStu ,routes.contributor);
 app.use('/student', checkUserTypeCon ,routes.student);
 app.use('/videos', routes.videos);
