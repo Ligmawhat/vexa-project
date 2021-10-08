@@ -34,8 +34,8 @@ router.post("/login", authUser, async (req, res) => {
           userType,
         };
         //FIX ME
-        // return res.redirect(`/${userType}/home`);
-        return res.redirect("/auth/");
+        return res.redirect(`/${userType}/home`);
+        // return res.redirect("/auth/");
       }
       return res.redirect("/auth/login");
     } catch (err) {
@@ -73,7 +73,7 @@ router.post("/register", async (req, res) => {
         name: newUser.fullName,
         userType
       };
-      return res.redirect('/auth');
+      return res.redirect(`/${userType}/home`);
     } catch (err) {
       return res.redirect('/auth/register');
     }

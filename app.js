@@ -6,6 +6,9 @@ const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const checkUser = require('./middleware/checkUser');
+const checkUserTypeCon = require('./middleware/checkUserTypeCon')
+const checkUserTypeStu = require('./middleware/checkUserTypeStu');
+
 
 const { UserType, Country, University } = require('./src/db/models');
 
@@ -47,8 +50,8 @@ app.use((req, res, next) => {
 
 //app.use('/', routes.main);
 app.use('/auth', routes.auth);
-app.use('/contributor', routes.contributor);
-app.use('/student', routes.student);
+app.use('/contributor', checkUserTypeStu ,routes.contributor);
+app.use('/student', checkUserTypeCon ,routes.student);
 app.use('/videos', routes.videos);
 
 // app.use('/entries', routes.entries);
