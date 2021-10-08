@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({
       UserType, University, Country,
-      Video, AccessVideo,
-      Course
+      // Video, AccessVideo,
+      // Course
     }) {
       // define association here
       this.belongsTo(UserType, {
@@ -25,17 +25,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'countryId'
       });
 
-      this.hasMany(Video, {
-        foreignKey: 'authorId'
-      });
-      this.hasMany(AccessVideo);
+      // this.hasMany(Video, {
+      //   foreignKey: 'authorId'
+      // });
+      // this.hasMany(AccessVideo);
 
-      this.belongsToMany(Course, {
-        through: 'UsersCourses'
-      });
-      this.belongsToMany(Video, {
-        through: AccessVideo
-      });
+      // this.belongsToMany(Course, {
+      //   through: 'UsersCourses'
+      // });
+      // this.belongsToMany(Video, {
+      //   through: AccessVideo
+      // });
     }
   };
   User.init({
