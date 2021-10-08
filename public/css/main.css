@@ -1,40 +1,57 @@
-/* body {
-  border: solid 2px black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 340px;
-  height: 900px;
-} */
 .container{
   width: 340px;
   margin: 0 auto;
 }
-.footer {
+.header{
   padding: 22px 0;
-  background-color: #f1f1f1;
-  position: fixed;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
+  /* background-color: green; */
 }
-.container {
-  width: 340px;
-  margin: 0 auto;
+.header-logo, .header-img{
+  width: 35px;
+  height: 35px;
 }
-.footer-wrapper {
+.nav{
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+  /* background-color: green; */
+
+}
+.header-button{
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: rgb(27, 121, 18);
+  outline: none;
+  border: none;
+}
+.menu-button__line {
+  width: 16px;
+  height: 1px;
+  background-color: #333;
+}
+.program-btn{
+  border-radius: 5px;
+  padding: 8px 20px;
+  background-color: green;
+  border: none;
+  outline: none;
+
+}
+.program-btn__link{
+  color: white;
+  text-decoration: none;
+}
+.phase{
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.footer-link {
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-item{
   display: block;
-}
-fo .container-fluid {
-  position: relative;
-}
-.header-button {
-  position: absolute;
-  left: 135px;
-  top: 20px;
 }

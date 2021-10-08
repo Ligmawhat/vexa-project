@@ -1,71 +1,48 @@
-<form method="POST" action="/auth/register">
-<div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Full name</label>
-    <input
-      name="fullName"
-      type="text"
-      class="form-control"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input
-      name="email"
-      type="email"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input
-      name="password"
-      type="password"
-      class="form-control"
-      id="exampleInputPassword1"
-    />
-  </div>
+<div class="container">
+  <form method="POST" action="/auth/register">
 
-  <div class="mb-3">
-    <select
-      name="university"
-      class="form-select"
-      aria-label="Default select example"
-    >
-      <option selected>Choose university</option>
-      {{#each universities}}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Full name</label>
+      <input name="fullName" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input name="password" type="password" class="form-control" id="exampleInputPassword1" />
+    </div>
+
+    <div class="mb-3">
+      <select name="university" class="form-select" aria-label="Default select example">
+        <option selected>Choose university</option>
+        {{#each universities}}
         <option name="university" value="{{this.name}}">{{this.name}} </option>
-      {{/each}}
-    </select>
-  </div>
+        {{/each}}
+      </select>
+    </div>
 
-  <div class="mb-3">
-    <select
-      name="country"
-      class="form-select"
-      aria-label="Default select example"
-    >
-      <option selected> Choose country </option>
-      {{#each countries}}
+    <div class="mb-3">
+      <select name="country" class="form-select" aria-label="Default select example">
+        <option selected> Choose country </option>
+        {{#each countries}}
         <option name="country" value="{{this.name}}">{{this.name}} </option>
-      {{/each}}
-    </select>
-  </div>
+        {{/each}}
+      </select>
+    </div>
 
-  <div class="mb-3">
-    <select
-      name="userType"
-      class="form-select"
-      aria-label="Default select example"
-    >
-      <option selected disabled>Choose role</option>
-      {{#each userTypes}}
+    <div class="mb-3">
+      <select name="userType" class="form-select" aria-label="Default select example">
+        <option selected disabled>Choose role</option>
+        {{#each userTypes}}
         <option name="userType" value="{{this.name}}">{{this.name}} </option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="mb-3">
-    <button type="submit" class="btn btn-primary"> Sign Up </button>
-  </div>
-</form>
+        {{/each}}
+      </select>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary"> Sign Up </button>
+    </div>
+  </form>
+
+</div>
