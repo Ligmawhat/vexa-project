@@ -50,7 +50,7 @@ app.use(express.json());
 // });
 
 //app.use('/', routes.main);
-app.use('/auth' , authUser , routes.auth);
+app.use('/auth', routes.auth);
 app.use('/contributor', checkUserTypeStu ,routes.contributor);
 app.use('/student', checkUserTypeCon ,routes.student);
 app.use('/videos', routes.videos);
