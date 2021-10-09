@@ -3,84 +3,73 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Video extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate({
-      UserType, University, Country,
-      Video, UsersVideosStat,
-      Course
+      User, Category, Week,
+      UsersVideosStat
     }) {
       // define association here
-      this.belongsTo(UserType, {
-        foreignKey: 'userTypeId'
-      });
-      this.belongsTo(University, {
-        foreignKey: 'universityId'
-      });
-      this.belongsTo(Country, {
-        foreignKey: 'countryId'
-      });
-
-      this.hasMany(Video, {
+      this.belongsTo(User, {
         foreignKey: 'authorId'
       });
-      this.hasMany(UsersVideosStat, {
-        foreignKey: 'userId'
+      this.belongsTo(Category, {
+        foreignKey: 'categoryId'
+      });
+      this.belongsTo(Week, {
+        foreignKey: 'weekId'
       });
 
-      this.belongsToMany(Course, {
-        through: 'UsersCourses',
-        foreignKey: 'userId'
+      this.hasMany(UsersVideosStat, {
+        foreignKey: 'videoId'
       });
-      this.belongsToMany(Video, {
+
+      this.belongsToMany(User, {
         through: UsersVideosStat,
-        foreignKey: 'userId'
+        foreignKey: 'videoId'
       });
     }
   };
-  User.init({
-    email: {
+  Video.init({
+    url: {
       allowNull: false,
       unique: true,
-      type: DataTypes.STRING,
-      validate: {
-        isEmail: true
-      }
+      type: DataTypes.STRING
     },
-    password: {
+    thumbUrl: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    fullName: {
+    title: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    tokens: {
-      type: DataTypes.INTEGER
-    },
-    userpicUrl: {
-      allowNull: false,
+    subtitle: {
       type: DataTypes.STRING
     },
-    userTypeId: {
+    duration: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
-    universityId: {
+    categoryId: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
-    countryId: {
+    weekId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    authorId: {
       allowNull: false,
       type: DataTypes.INTEGER
     }
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'Video',
   });
-  return User;
+  return Video;
 };
