@@ -14,18 +14,19 @@ module.exports = (sequelize, DataTypes) => {
       UsersVideosStat
     }) {
       // define association here
-      this.belongsTo(User, {
-        foreignKey: 'authorId'
-      });
       this.belongsTo(Category, {
         foreignKey: 'categoryId'
       });
       this.belongsTo(Week, {
         foreignKey: 'weekId'
       });
-
+      
       this.hasMany(UsersVideosStat, {
         foreignKey: 'videoId'
+      });
+        
+      this.belongsTo(User, {
+        foreignKey: 'authorId'
       });
 
       this.belongsToMany(User, {

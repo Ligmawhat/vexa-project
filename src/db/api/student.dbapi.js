@@ -2,67 +2,110 @@ const path = require('path');
 
 const modelsPath = path.join(process.env.PWD, 'src', 'db', 'models');
 
+const { Op } = require('sequelize');
+
 const {
-  UserType, User, University, Country,
+  Sequelize,
+  sequelize,
+  User, Country, Course, Week, Phase, AdditionalFile, Video, UsersVideosStat,
 } = require(modelsPath);
 
-const weeks = [{
-  goals: 'Week 1 goals',
-  notes: 'Week 1 notes',
-  additionalFiles: [{
-    name: 'foo1 name',
-    path: 'foo1.pdf',
-  }, {
-    name: 'bar1 name',
-    path: 'bar1.zip',
-  }],
-  events: 'Week 1 events',
-  phaseNumber: 1,
-}, {
-  goals: 'Week 2 goals',//TODO;
-  notes: 'Week 2 notes',
-  additionalFiles: [{
-    name: 'foo2 name',
-    path: 'foo2.pdf',
-  }],
-  events: [{
-    title: 'vid1_1 title',
-    path: 'vid1_1.mp4',
-    thumbnail: 'img1.jpg',
-    duration: 154000,
-  }, {
-    title: 'vid1_2 title',
-    path: 'vid1_2.mp4',
-    thumbnail: 'img2.jpg',
-    duration: 184000,
-  }],
-  phaseNumber: 1,
-}, {
-  goals: 'Week 3 goals',
-  notes: 'Week 3 notes',
-  additionalFiles: [{
-    name: 'foo3 name',
-    path: 'foo3.pdf',
-  }],
-  events: 'Week 3 events',
-  phaseNumber: 2,
-}, {
-  goals: 'Week 4 goals',
-  notes: 'Week 4 notes',
-  events: 'Week 4 events',
-  phaseNumber: 2,
-}, {
-  goals: 'Week 5 goals',
-  notes: 'Week 5 notes',
-  events: 'Week 5 events',
-  phaseNumber: 3,
-}, {
-  goals: 'Week 6 goals',
-  notes: 'Week 6 notes',
-  events: 'Week 6 events',
-  phaseNumber: 3,
-}];
+const attributes = {
+  week: ['number', 'goals', 'notes'],
+  course: ['title', 'startDate'],
+  phase: ['number'],
+  country: ['flagUrl', 'name'],
+};
 
-const obj = {};
+function getNecessaryPropsOfCourse({
+  id, title, startDate, 'Country.flagUrl': flagUrl, 'Country.name': countryName,
+}) {
+  return {
+    id, title, startDate, flagUrl, countryName,
+  };
+}
 
-module.exports = obj;
+const api = {
+  async getUsersCourseBrief(userId) {
+    const course = await Course.findOne({
+      attributes: [...attributes.course, 'id'],
+      include: [{
+        model: User,
+        where: { id: userId },
+        attributes: [],
+        through: { attributes: [] },
+      }, {
+        model: Country,
+        attributes: attributes.country,
+        nested: false,
+      }],
+      raw: true,
+    });
+    const result = getNecessaryPropsOfCourse(course);
+    return result;
+  },
+
+  async getAllAccessibleWeeks(courseId) {
+    const result = await Course.findOne({
+      attributes: attributes.course,
+      where: {
+        id: courseId,
+        '$Weeks.number$': {
+          [Op.lte]: sequelize.fn(
+            'TRUNC',
+            sequelize.literal('DATE_PART(\'day\', NOW()::timestamp - "Course"."startDate"::timestamp)/7'),
+          ),
+        },
+      },
+      include: {
+        model: Week,
+        attributes: attributes.week,
+        include: {
+          model: Phase,
+          attributes: attributes.phase,
+        },
+      },
+    });
+    return result;
+  },
+
+  async getAccessileWeekOfCourse(courseId, number) {
+    const result = await Week.findOne({
+      where: {
+        courseId,
+        [Op.and]: [
+          { number },
+          {
+            number: {
+              [Op.lte]: sequelize.fn(
+                'TRUNC',
+                sequelize.literal('DATE_PART(\'day\', NOW()::timestamp - "Course"."startDate"::timestamp)/7'),
+              ),
+            },
+          },
+        ],
+      },
+      include: {
+        model: Course,
+        attributes: [],
+      },
+    });
+    return result;
+  },
+
+  async getViewedVideos(userId) {
+    const result = await User.findAll({
+      include: [{
+        model: Video,
+        through: {
+          model: UsersVideosStat,
+          attributes: [],
+        },
+      }],
+      where: { id: userId },
+    });
+    return result;
+  },
+};
+
+module.exports = api;

@@ -28,6 +28,14 @@ module.exports = {
           key: 'id'
         }
       },
+      phaseId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Phases',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

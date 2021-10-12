@@ -10,24 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ 
-      Course,
-      Video, AdditionalFile,
-      Phase
+      Course, Phase,
+      Video, AdditionalFile
     }) {
       // define association here
       this.belongsTo(Course, {
         foreignKey: 'courseId'
+      });
+      this.belongsTo(Phase, {
+        foreignKey: 'phaseId'
       });
       
       this.hasMany(Video, {
         foreignKey: 'weekId'
       });
       this.hasMany(AdditionalFile, {
-        foreignKey: 'weekId'
-      });
-
-      this.belongsToMany(Phase, {
-        through: 'WeeksPhases',
         foreignKey: 'weekId'
       });
     }
@@ -46,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     courseId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    phaseId: {
       allowNull: false,
       type: DataTypes.INTEGER
     }

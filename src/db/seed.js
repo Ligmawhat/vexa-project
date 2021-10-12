@@ -85,9 +85,9 @@ async function seedCourses() {
       goals: `Greekseas Sailing week ${i} goals`,
       notes: `Greekseas Sailing week ${i} notes`,
       courseId: course.id,
-      number: i
+      number: i,
+      phaseId: findIdByKeyValue(phases, 'number', Math.ceil(i / 2))
     });
-    await week.addPhase(phases[Math.ceil(i / 2) - 1]);
     if (i % 2 === 1) {
       await seedAdditionalFile(week.id);
     }
@@ -122,9 +122,9 @@ async function seedCourses() {
       goals: `Russian Museums week ${i} goals`,
       notes: `Russian Museums week ${i} notes`,
       courseId: course.id,
-      number: i
+      number: i,
+      phaseId: findIdByKeyValue(phases, 'number', i)
     });
-    await week.addPhase(phases[i - 1]);
     if (i % 2 === 1) {
       await seedAdditionalFile(week.id);
     }
