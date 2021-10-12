@@ -15,6 +15,7 @@ const attributes = {
   course: ['title', 'startDate'],
   phase: ['number'],
   country: ['flagUrl', 'name'],
+  video: ['url', 'thumbUrl', 'title', 'subtitle', 'duration'],
 };
 
 function getNecessaryPropsOfCourse({
@@ -64,6 +65,54 @@ const api = {
           model: Phase,
           attributes: attributes.phase,
         },
+      },
+    });
+    return result;
+  },
+
+  async getAllWeeks(courseId) {
+    const result = await Course.findByPk(courseId, {
+      attributes: attributes.course,
+      include: {
+        model: Week,
+        attributes: attributes.week,
+        include: {
+          model: Phase,
+          attributes: attributes.phase,
+        },
+      },
+    });
+    return result;
+  },
+
+  async getCourseInfo(courseId) {
+    const result = await Week.findOne({
+      attributes: [
+        [
+          Sequelize.fn(
+            'MAX',
+            Sequelize.col('number'),
+          ),
+          'weeksCount',
+        ],
+      ],
+      include: {
+        model: Course,
+        attributes: attributes.course,
+      },
+      where: { courseId },
+      group: ['courseId'],
+    });
+    return result;
+  },
+
+  async getCourseWeek(courseId, number) {
+    const result = await Week.findOne({
+      attributes: attributes.week,
+      where: { courseId, number },
+      include: {
+        model: Video,
+        attributes: attributes.video,
       },
     });
     return result;
