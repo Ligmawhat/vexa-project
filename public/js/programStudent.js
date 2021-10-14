@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
   }
 
   function generateVideo(src, url) {
-    return `<a href="${url}"><img width="100%" src="${src}" height="200px"></a>`;
+    return `<a href="${url}"><img width="100%" class="program-events__img" src="${src}" height="200px"></a>`;
   }
 
   function drawWeek(week) {
