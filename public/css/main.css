@@ -55,3 +55,15 @@
 .page-item{
   display: block;
 }
+/* .footer-link{
+  margin-right: 50px;
+} */
+.footer-icon{
+  width: 79px;
+  height: 50px;
+}
+.footer-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
