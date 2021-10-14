@@ -1,4 +1,3 @@
-
 const phases = [
   {
     number: 1,
@@ -68,7 +67,7 @@ const phases = [
       },
     ],
   },
-];
+]; //hardcode for weeks and smth
 
 function findWeek(phases, weekNum) {
   for (let phase of phases) {
@@ -92,34 +91,51 @@ const $nextWeek = document.querySelector("[data-next-week]");
 
 const $prevWeek = document.querySelector("[data-prev-week]");
 
+let parsedWeek;
+
 document.addEventListener("DOMContentLoaded", async (event) => {
-  drawWeek(phases, weekNum);
-  // //  const allPosts = await fetch('/')  //Получаю массив программы со всеми элементами и неделями
+  const response = await fetch(`${window.location.href}/1`);
+  parsedWeek = await response.json();
+  console.log(parsedWeek);
+  
+  drawWeek(parsedWeek);
 });
+
+//   drawWeek(phases, weekNum);
+//   // //  const allPosts = await fetch('/')  //Получаю массив программы со всеми элементами и неделями
+// });
 
 let weekNum = 1;
 
-function drawWeek(phases, weekNum) {
-  const [week, phaseNum] = findWeek(phases, weekNum);
+function drawWeek(week) {
+  // const [week, phaseNum] = findWeek(phases, weekNum);
   $notes.innerHTML = week.notes;
   $goals.innerHTML = week.goals;
-  $video.src = week.videos[0].url;
+  $video.src = week.Videos[0].url;
 }
 
-const lastPhase = phases[phases.length - 1];
-const weeksCount = lastPhase.weeks[lastPhase.weeks.length - 1].number;
+// const lastPhase = phases[phases.length - 1];
+const weeksCount = 6;
 
 $nextWeek.addEventListener("click", async (event) => {
   if (weekNum < weeksCount) {
     weekNum += 1;
-    drawWeek(phases, weekNum);
+    const weekData = await getWeekInfo(weekNum);
+    drawWeek(weekData);
   }
 });
 
-$prevWeek.addEventListener("click", (event) => {
+$prevWeek.addEventListener("click", async (event) => {
   if (weekNum > 1) {
     weekNum -= 1;
-    drawWeek(phases, weekNum);
+    const weekData = await getWeekInfo(weekNum);
+    drawWeek(weekData);
   }
 });
 
+const getWeekInfo = async (weeknum) => {
+  const currWeek = await fetch(`${window.location.href}/${weeknum}`);
+  const weekInfo = await currWeek.json();
+  console.log(" --------------->>>>>>>> ", weekInfo);
+  return weekInfo;
+};
