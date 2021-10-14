@@ -54,6 +54,9 @@ app.use('/auth', routes.auth);
 app.use('/contributor', checkUserTypeStu ,routes.contributor);
 app.use('/student', checkUserTypeCon ,routes.student);
 app.use('/videos', routes.videos);
+app.use('*', (req,res) => {
+  res.redirect('/auth/register')
+})
 
 // app.use('/entries', routes.entries);
 
