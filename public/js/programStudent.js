@@ -1,141 +1,43 @@
-const phases = [
-  {
-    number: 1,
-    weeks: [
-      {
-        number: 1,
-        goals: "Week 1 Goal",
-        notes: "Week 1 Notes",
-        videos: [
-          {
-            title: "Week 1 videos events",
-            subtitle: "Week 1 subtitle",
-            url: "/images/thumbs/scape.jpg",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    number: 2,
-    weeks: [
-      {
-        number: 2,
-        goals: "Week 2 Goal",
-        notes: "Week 2 Notes",
-        videos: [
-          {
-            title: "Week 2 videos events",
-            subtitle: "Week 2 subtitle",
-            url: "/images/thumbs/yacht.jpg",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    number: 3,
-    weeks: [
-      {
-        number: 3,
-        goals: "Week 3 Goal",
-        notes: "Week 3 Notes",
-        videos: [
-          {
-            title: "Week 3 videos events",
-            subtitle: "Week 3 subtitle",
-            url: "/images/thumbs/diving.jpg",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    number: 4,
-    weeks: [
-      {
-        number: 4,
-        goals: "Week 4 Goal",
-        notes: "Week 4 Notes",
-        videos: [
-          {
-            title: "Week 4 videos events",
-            subtitle: "Week 4 subtitle",
-            url: "/images/thumbs/horseride.jpg",
-          },
-        ],
-      },
-    ],
-  },
-]; //hardcode for weeks and smth
+document.addEventListener('DOMContentLoaded', async (event) => {
+  const $video = document.querySelector('[data-video]');
+  const $notes = document.querySelector('[data-notes]');
+  const $goals = document.querySelector('[data-goals]');
+  const $nextWeek = document.querySelector('[data-next-week]');
+  const $prevWeek = document.querySelector('[data-prev-week]');
+  const $weekCurNum = document.querySelector('[data-week-cur-num]');
 
-function findWeek(phases, weekNum) {
-  for (let phase of phases) {
-    const { number } = phase;
-    for (let week of phase.weeks) {
-      if (week.number === weekNum) {
-        return [week, number];
-      }
+  const weeksCount = Number(document.querySelector('[data-weeks-count]').innerText);
+
+  async function getWeekInfo(weeknum) {
+    const currWeek = await fetch(`${window.location.href}/${weeknum}`);
+    const weekInfo = await currWeek.json();
+    return weekInfo;
+  }
+
+  function drawWeek(week) {
+    $weekCurNum.innerHTML = week.number;
+    $notes.innerHTML = week.notes;
+    $goals.innerHTML = week.goals;
+    $video.src = week.Videos[0].url;
+  }
+
+  let weekNum = 1;
+
+  drawWeek(await getWeekInfo(weekNum));
+
+  $nextWeek.addEventListener('click', async (event) => {
+    if (weekNum < weeksCount) {
+      weekNum += 1;
+      const weekData = await getWeekInfo(weekNum);
+      drawWeek(weekData);
     }
-  }
-  return null;
-}
+  });
 
-const $video = document.querySelector("[data-video]");
-
-const $notes = document.querySelector("[data-notes]");
-
-const $goals = document.querySelector("[data-goals]");
-
-const $nextWeek = document.querySelector("[data-next-week]");
-
-const $prevWeek = document.querySelector("[data-prev-week]");
-
-let parsedWeek;
-
-document.addEventListener("DOMContentLoaded", async (event) => {
-  const response = await fetch(`${window.location.href}/1`);
-  parsedWeek = await response.json();
-  console.log(parsedWeek);
-  
-  drawWeek(parsedWeek);
+  $prevWeek.addEventListener('click', async (event) => {
+    if (weekNum > 1) {
+      weekNum -= 1;
+      const weekData = await getWeekInfo(weekNum);
+      drawWeek(weekData);
+    }
+  });
 });
-
-//   drawWeek(phases, weekNum);
-//   // //  const allPosts = await fetch('/')  //Получаю массив программы со всеми элементами и неделями
-// });
-
-let weekNum = 1;
-
-function drawWeek(week) {
-  // const [week, phaseNum] = findWeek(phases, weekNum);
-  $notes.innerHTML = week.notes;
-  $goals.innerHTML = week.goals;
-  $video.src = week.Videos[0].url;
-}
-
-// const lastPhase = phases[phases.length - 1];
-const weeksCount = 6;
-
-$nextWeek.addEventListener("click", async (event) => {
-  if (weekNum < weeksCount) {
-    weekNum += 1;
-    const weekData = await getWeekInfo(weekNum);
-    drawWeek(weekData);
-  }
-});
-
-$prevWeek.addEventListener("click", async (event) => {
-  if (weekNum > 1) {
-    weekNum -= 1;
-    const weekData = await getWeekInfo(weekNum);
-    drawWeek(weekData);
-  }
-});
-
-const getWeekInfo = async (weeknum) => {
-  const currWeek = await fetch(`${window.location.href}/${weeknum}`);
-  const weekInfo = await currWeek.json();
-  console.log(" --------------->>>>>>>> ", weekInfo);
-  return weekInfo;
-};

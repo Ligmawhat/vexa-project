@@ -86,22 +86,23 @@ const api = {
   },
 
   async getCourseInfo(courseId) {
-    const result = await Week.findOne({
-      attributes: [
-        [
+    const result = await Course.findByPk(courseId, {
+      attributes: {
+        include: [[
           Sequelize.fn(
             'MAX',
-            Sequelize.col('number'),
+            Sequelize.col('Weeks.number'),
           ),
           'weeksCount',
-        ],
-      ],
-      include: {
-        model: Course,
-        attributes: attributes.course,
+        ]],
       },
-      where: { courseId },
-      group: ['courseId'],
+      include: {
+        require: true,
+        model: Week,
+        attributes: [],
+      },
+      where: { id: courseId },
+      group: ['Course.id'],
     });
     return result;
   },
