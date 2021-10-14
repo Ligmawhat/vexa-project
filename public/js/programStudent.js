@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async (event) => {
-  const $video = document.querySelector('[data-video]');
+  const $videos = document.querySelector('[data-videos]');
   const $notes = document.querySelector('[data-notes]');
   const $goals = document.querySelector('[data-goals]');
   const $nextWeek = document.querySelector('[data-next-week]');
@@ -14,11 +14,18 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     return weekInfo;
   }
 
+  function generateVideo(src, url) {
+    return `<a href="${url}"><img width="100%" src="${src}" height="200px"></a>`;
+  }
+
   function drawWeek(week) {
     $weekCurNum.innerHTML = week.number;
     $notes.innerHTML = week.notes;
     $goals.innerHTML = week.goals;
-    $video.src = week.Videos[0].url;
+    $videos.innerHTML = '';
+    for (const video of week.Videos) {
+      $videos.insertAdjacentHTML('beforeend', generateVideo(video.thumbUrl, video.url));
+    }
   }
 
   let weekNum = 1;

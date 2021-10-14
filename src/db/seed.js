@@ -95,7 +95,7 @@ async function seedCourses() {
     for (let i = 1; i <= randomFromRange(1, 4); i += 1) {
       await db.Video.create({
         url: `/videos/${course.id}_${week.id}_${i}.jpg`,
-        thumbUrl: `/images/${thumbs[randomFromRange(0, thumbs.length - 1)]}`,
+        thumbUrl: `/images/thumbs/${thumbs[randomFromRange(0, thumbs.length - 1)]}`,
         title: `GS title ${i}`,
         subtitle: `GS subtitle ${i}`,
         duration: 30e3 * i,
@@ -132,7 +132,7 @@ async function seedCourses() {
     for (let i = 1; i <= randomFromRange(1, 4); i += 1) {
       await db.Video.create({
         url: `/videos/${course.id}_${week.id}_${i}.jpg`,
-        thumbUrl: `/images/${thumbs[randomFromRange(0, thumbs.length - 1)]}`,
+        thumbUrl: `/images/thumbs/${thumbs[randomFromRange(0, thumbs.length - 1)]}`,
         title: `RM title ${i}`,
         subtitle: `RM subtitle ${i}`,
         duration: 30e3 * i,
