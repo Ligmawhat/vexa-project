@@ -6,4 +6,6 @@
 
 Fork a repository in your folder
 
-start project using npm run dev
+ * install all dependecies in root folder using 'npm i'
+
+ * start project using npm run dev
