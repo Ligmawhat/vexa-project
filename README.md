@@ -4,7 +4,7 @@
 
 ## how to
 
-Fork a repository in your folder
+ * Fork a repository in your folder
 
  * install all dependecies in root folder using 'npm i'
 
