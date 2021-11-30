@@ -1,0 +1,101 @@
+{{!-- {{{hbs partials}}} --}}
+<div class="container">
+
+  {{>upperNavbar}}
+
+  <script defer src="/js/programStudent.js"></script>
+
+  {{!-- <div class="button-wrapper">
+    <a href="#bottom" class="button-linl">
+      <button>GCI badge</button>
+    </a>
+    <a href="#bottom" class="button-linl">
+      <button>
+        Culture videos
+      </button>
+    </a>
+  </div> --}}
+  <div>
+
+    <div style="display: flex;   align-items: center; 
+  justify-content: space-evenly; border: 10px" {{!-- buttons on flag --}}>
+      <button class="program-btn"><a class="program-btn__link" href="#bottom"> GCI badge </a>
+      </button>
+
+      <button class="program-btn"><a class="program-btn__link" href="#bottom"> Culture videos </a>
+      </button>
+    </div {{!-- buttons on flag --}}>
+
+  </div>
+
+  <div {{! phases and weeks}}>
+    <div class="phase">
+      <p>phase1</p>
+      <p>phase2 </p>
+      <p>phase3</p>
+    </div>
+
+    <div name="weekChanger" class="d-flex justify-content-center">
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item">
+            <a data-prev-week id="prev-week" class="page-link"> ◀ </a>
+          </li>
+          {{! <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">2</a>
+          </li> }}
+          <li class="page-item">
+            <span>Week <span data-week-cur-num>1</span> of <span data-weeks-count>{{weeksCount}}</span></span>
+          </li>
+          <li class="page-item">
+            <a data-next-week id="next-week" class="page-link"> ▶ </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div plain text plus videos about company>
+      <div id="week">
+        <h5>
+          Weekly goals</h5>
+        <p data-goals> test text area </p>
+      </div>
+      <div>
+        <h5>
+          Addititional notes</h5>
+        <p data-notes> test text area 2 </p>
+      </div>
+      <div>
+        <h5 class="program-events"> Scheduled events</h5>
+      </div>
+      <div data-videos class="data-video">
+      </div>
+    </div>
+  </div {{! phases and weeks}}>
+
+
+  <div {{! fixed part on bottom}}>
+    <div>
+      <h5 class="program-global">Global business intelligence badge</h5>
+      <div> <img style="border-radius: 25px;" src="/badge.jpg" width="100%"> </div>
+      <div>
+        <h5 class="program-culture"> My culture videos </h5>
+
+      </div>
+    </div>
+
+    CULTURE VIDEOS
+
+
+  </div {{! fixed part on bottom}}>
+
+
+
+
+
+
+
+  {{>footer}}
+
+</div>
+
+</div>

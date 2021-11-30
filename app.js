@@ -5,6 +5,13 @@ const hbs = require('hbs');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+const checkUser = require('./middleware/checkUser');
+const checkUserTypeCon = require('./middleware/checkUserTypeCon')
+const checkUserTypeStu = require('./middleware/checkUserTypeStu');
+
+
+const { UserType, Country, University } = require('./src/db/models');
+const authUser = require('./middleware/authUser');
 
 const redisClient = redis.createClient();
 
@@ -27,21 +34,31 @@ const sessionConfig = {
   httpOnly: true,
   cookie: { expires: 24 * 60 * 60e3 },
 };
+
+
 app.use(session(sessionConfig));
+app.use(checkUser);
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.locals.user = req.session.user;
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.user = req.session.user;
+//   next();
+// });
 
-// app.use('/', routes.main);
+//app.use('/', routes.main);
+app.use('/auth', routes.auth);
+app.use('/contributor', checkUserTypeStu ,routes.contributor);
+app.use('/student', checkUserTypeCon ,routes.student);
+app.use('/videos', routes.videos);
+app.use('*', (req,res) => {
+  res.redirect('/auth/register')
+})
+
 // app.use('/entries', routes.entries);
-// app.use('/auth', routes.auth);
 
 app.listen(PORT, () => {
   console.log(`server started PORT: ${PORT}`);

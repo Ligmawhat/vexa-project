@@ -108,3 +108,6 @@ package-lock.json
 
 # macOS files
 .DS_Store
+
+# dev script
+s.js
